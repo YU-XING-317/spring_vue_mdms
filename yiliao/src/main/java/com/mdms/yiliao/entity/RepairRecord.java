@@ -1,10 +1,13 @@
 package com.mdms.yiliao.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.util.Date;
 
 // 检修记录
 public class RepairRecord {
     // 检修记录Id
+    @TableId
     private String rrId;
     // 检修时间
     private Date rrTime;

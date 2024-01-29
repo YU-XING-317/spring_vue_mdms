@@ -1,8 +1,11 @@
 package com.mdms.yiliao.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+
 // 工程师类
 public class Employer {
     // 工程师Id
+    @TableId
     private String eId;
     // 工程师姓名
     private String eName;

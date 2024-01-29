@@ -5,6 +5,7 @@ import com.mdms.yiliao.mapper.DeviceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -15,16 +16,9 @@ public class DeviceController {
     @Autowired
     private DeviceMapper deviceMapper;
 
-    @GetMapping("/device")
-    public List query(){
-
-        List<Device> list = deviceMapper.selectList(null);
-        System.out.println(list);
-        return list;
-    }
-
+    //插入设备
     @PostMapping("/device")
-    public String save(Device device){
+    public String deviceInsert(Device device){
         int i;
         // System.out.println(device);
         i = deviceMapper.insert(device);
@@ -35,4 +29,17 @@ public class DeviceController {
         }
     }
 
+    //修改设备信息
+    @PutMapping("/device")
+    public int deviceUpdate(Device device){
+        return deviceMapper.updateById(device);
+    }
+
+    //查询所有设备
+    @GetMapping("/device")
+    public List devicesList(){
+        List<Device> list = deviceMapper.selectList(null);
+        System.out.println(list);
+        return list;
+    }
 }

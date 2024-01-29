@@ -1,10 +1,13 @@
 package com.mdms.yiliao.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.util.Date;
 
 // 维保记录类
 public class MaintenanceRecord {
     // 维保记录Id
+    @TableId
     private String mrId;
     // 维保时间
     private Date mrTime;
@@ -18,10 +21,10 @@ public class MaintenanceRecord {
     private String mrExp;
     // 维保备注
     private String mrMark;
-    // 维保设备
-    private Device device;
-    // 维保工程师
-    private Employer employer;
+    // 维保设备Id
+    private String did;
+    // 维保工程师Id
+    private String eid;
 
     public String getMrId() {
         return mrId;
@@ -79,21 +82,13 @@ public class MaintenanceRecord {
         this.mrMark = mrMark;
     }
 
-    public Device getDevice() {
-        return device;
-    }
+    public String getDid() { return did; }
 
-    public void setDevice(Device device) {
-        this.device = device;
-    }
+    public void setDid(String did) { this.did = did; }
 
-    public Employer getEmployer() {
-        return employer;
-    }
+    public String getEid() { return eid; }
 
-    public void setEmployer(Employer employer) {
-        this.employer = employer;
-    }
+    public void setEid(String eid) { this.eid = eid; }
 
     @Override
     public String toString() {
@@ -105,8 +100,8 @@ public class MaintenanceRecord {
                 ", mrState='" + mrState + '\'' +
                 ", mrExp='" + mrExp + '\'' +
                 ", mrMark='" + mrMark + '\'' +
-                ", device=" + device +
-                ", employer=" + employer +
+                ", did='" + did + '\'' +
+                ", eid='" + eid + '\'' +
                 '}';
     }
 }

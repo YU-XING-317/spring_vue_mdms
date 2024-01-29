@@ -1,8 +1,11 @@
 package com.mdms.yiliao.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+
 // 医疗设备类
 public class Device {
     // 设备Id
+    @TableId
     private String did;
     // 设备名称
     private String dname;

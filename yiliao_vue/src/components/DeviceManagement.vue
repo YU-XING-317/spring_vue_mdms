@@ -123,9 +123,10 @@ export default {
       },
       device: [],
     });
+
     function init() {
       axios
-        .post("device/getDeviceByKeys", {
+        .get("device/getDeviceByKeys", {
           dname: state.formQuery.dname,
           dtype: state.formQuery.dtype,
           supplier: state.formQuery.supplier,
@@ -145,7 +146,7 @@ export default {
       if (
         state.addDevice.dname == "" ||
         state.addDevice.dtype == "" ||
-        state.addDevice.supplier ||
+        state.addDevice.supplier == "" ||
         state.addDevice.hospital == "" ||
         state.addDevice.department == ""
       ) {

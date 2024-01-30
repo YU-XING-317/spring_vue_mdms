@@ -8,100 +8,108 @@ import java.util.Date;
 public class MaintenanceRecord {
     // 维保记录Id
     @TableId
-    private String mrId;
+    private String mrid;
     // 维保时间
-    private Date mrTime;
+    private Date mrtime;
     // 维保内容
-    private String mrContent;
+    private String mrcontent;
     // 维保
-    private String mrEntity;
+    private String mrentity;
     // 维保状态
-    private String mrState;
+    private String mrstate;
     // 维保记录
-    private String mrExp;
+    private String mrexp;
     // 维保备注
-    private String mrMark;
+    private String mrmark;
     // 维保设备Id
     private String did;
     // 维保工程师Id
     private String eid;
 
-    public String getMrId() {
-        return mrId;
-    }
-
-    public void setMrId(String mrId) {
-        this.mrId = mrId;
-    }
-
-    public Date getMrTime() {
-        return mrTime;
-    }
-
-    public void setMrTime(Date mrTime) {
-        this.mrTime = mrTime;
-    }
-
-    public String getMrContent() {
-        return mrContent;
-    }
-
-    public void setMrContent(String mrContent) {
-        this.mrContent = mrContent;
-    }
-
-    public String getMrEntity() {
-        return mrEntity;
-    }
-
-    public void setMrEntity(String mrEntity) {
-        this.mrEntity = mrEntity;
-    }
-
-    public String getMrState() {
-        return mrState;
-    }
-
-    public void setMrState(String mrState) {
-        this.mrState = mrState;
-    }
-
-    public String getMrExp() {
-        return mrExp;
-    }
-
-    public void setMrExp(String mrExp) {
-        this.mrExp = mrExp;
-    }
-
-    public String getMrMark() {
-        return mrMark;
-    }
-
-    public void setMrMark(String mrMark) {
-        this.mrMark = mrMark;
-    }
-
-    public String getDid() { return did; }
-
-    public void setDid(String did) { this.did = did; }
-
-    public String getEid() { return eid; }
-
-    public void setEid(String eid) { this.eid = eid; }
-
     @Override
     public String toString() {
         return "MaintenanceRecord{" +
-                "mrId='" + mrId + '\'' +
-                ", mrTime=" + mrTime +
-                ", mrContent='" + mrContent + '\'' +
-                ", mrEntity='" + mrEntity + '\'' +
-                ", mrState='" + mrState + '\'' +
-                ", mrExp='" + mrExp + '\'' +
-                ", mrMark='" + mrMark + '\'' +
+                "mrid='" + mrid + '\'' +
+                ", mrtime=" + mrtime +
+                ", mrcontent='" + mrcontent + '\'' +
+                ", mrentity='" + mrentity + '\'' +
+                ", mrstate='" + mrstate + '\'' +
+                ", mrexp='" + mrexp + '\'' +
+                ", mrmark='" + mrmark + '\'' +
                 ", did='" + did + '\'' +
                 ", eid='" + eid + '\'' +
                 '}';
+    }
+
+    public String getMrid() {
+        return mrid;
+    }
+
+    public void setMrid(String mrid) {
+        this.mrid = mrid;
+    }
+
+    public Date getMrtime() {
+        return mrtime;
+    }
+
+    public void setMrtime(Date mrtime) {
+        this.mrtime = mrtime;
+    }
+
+    public String getMrcontent() {
+        return mrcontent;
+    }
+
+    public void setMrcontent(String mrcontent) {
+        this.mrcontent = mrcontent;
+    }
+
+    public String getMrentity() {
+        return mrentity;
+    }
+
+    public void setMrentity(String mrentity) {
+        this.mrentity = mrentity;
+    }
+
+    public String getMrstate() {
+        return mrstate;
+    }
+
+    public void setMrstate(String mrstate) {
+        this.mrstate = mrstate;
+    }
+
+    public String getMrexp() {
+        return mrexp;
+    }
+
+    public void setMrexp(String mrexp) {
+        this.mrexp = mrexp;
+    }
+
+    public String getMrmark() {
+        return mrmark;
+    }
+
+    public void setMrmark(String mrmark) {
+        this.mrmark = mrmark;
+    }
+
+    public String getDid() {
+        return did;
+    }
+
+    public void setDid(String did) {
+        this.did = did;
+    }
+
+    public String getEid() {
+        return eid;
+    }
+
+    public void setEid(String eid) {
+        this.eid = eid;
     }
 }

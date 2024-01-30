@@ -8,75 +8,75 @@ import java.util.Date;
 public class RepairRecord {
     // 检修记录Id
     @TableId
-    private String rrId;
+    private String rrid;
     // 检修时间
-    private Date rrTime;
+    private Date rrtime;
     // 检修内容
-    private String rrContent;
+    private String rrcontent;
     // 检修状态
-    private String rrState;
+    private String rrstate;
     // 检修结果
-    private String rrResult;
+    private String rrresult;
     // 检修备注
-    private String rrMark;
+    private String rrmark;
 
-    public String getRrId() {
-        return rrId;
+    public String getRrid() {
+        return rrid;
     }
 
-    public void setRrId(String rrId) {
-        this.rrId = rrId;
+    public void setRrid(String rrid) {
+        this.rrid = rrid;
     }
 
-    public Date getRrTime() {
-        return rrTime;
+    public Date getRrtime() {
+        return rrtime;
     }
 
-    public void setRrTime(Date rrTime) {
-        this.rrTime = rrTime;
+    public void setRrtime(Date rrtime) {
+        this.rrtime = rrtime;
     }
 
-    public String getRrContent() {
-        return rrContent;
+    public String getRrcontent() {
+        return rrcontent;
     }
 
-    public void setRrContent(String rrContent) {
-        this.rrContent = rrContent;
+    public void setRrcontent(String rrcontent) {
+        this.rrcontent = rrcontent;
     }
 
-    public String getRrState() {
-        return rrState;
+    public String getRrstate() {
+        return rrstate;
     }
 
-    public void setRrState(String rrState) {
-        this.rrState = rrState;
+    public void setRrstate(String rrstate) {
+        this.rrstate = rrstate;
     }
 
-    public String getRrResult() {
-        return rrResult;
+    public String getRrresult() {
+        return rrresult;
     }
 
-    public void setRrResult(String rrResult) {
-        this.rrResult = rrResult;
+    public void setRrresult(String rrresult) {
+        this.rrresult = rrresult;
     }
 
-    public String getRrMark() {
-        return rrMark;
+    public String getRrmark() {
+        return rrmark;
     }
 
-    public void setRrMark(String rrMark) {
-        this.rrMark = rrMark;
+    public void setRrmark(String rrmark) {
+        this.rrmark = rrmark;
     }
 
     @Override
     public String toString() {
         return "RepairRecord{" +
-                "rrId='" + rrId + '\'' +
-                ", rrTime=" + rrTime +
-                ", rrContent='" + rrContent + '\'' +
-                ", rrState='" + rrState + '\'' +
-                ", rrResult='" + rrResult + '\'' +
-                ", rrMark='" + rrMark + '\'' +
+                "rrid='" + rrid + '\'' +
+                ", rrtime=" + rrtime +
+                ", rrcontent='" + rrcontent + '\'' +
+                ", rrstate='" + rrstate + '\'' +
+                ", rrresult='" + rrresult + '\'' +
+                ", rrmark='" + rrmark + '\'' +
                 '}';
     }
 }

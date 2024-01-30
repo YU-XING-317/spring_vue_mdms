@@ -47,7 +47,7 @@ public class MaintenanceRecordController {
     @GetMapping("/mRecord/did")
     public List maintenanceRecordListByDname(String Did){
         QueryWrapper<MaintenanceRecord> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("did","did");
+        queryWrapper.eq("did",Did);
         List<MaintenanceRecord> list = maintenanceRecordMapper.selectList(queryWrapper);
         return list;
     }

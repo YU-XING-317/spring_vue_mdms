@@ -17,7 +17,7 @@ public class RepairRecordController {
     private RepairRecordMapper repairRecordMapper;
 
     //添加维保记录
-    @PostMapping("/mRecord")
+    @PostMapping("/rRecord")
     public String repairRecordInsert(RepairRecord repairRecord){
         int i;
         // System.out.println(device);
@@ -30,13 +30,13 @@ public class RepairRecordController {
     }
 
     //修改维保记录
-    @PutMapping("/mRecord")
+    @PutMapping("/rRecord")
     public int repairRecordUpdate(RepairRecord repairRecord){
         return repairRecordMapper.updateById(repairRecord);
     }
 
     //查询所有维保记录
-    @GetMapping("/mRecord")
+    @GetMapping("/rRecord")
     public List repairRecordList() {
         List<RepairRecord> list = repairRecordMapper.selectList(null);
         System.out.println(list);
@@ -44,10 +44,10 @@ public class RepairRecordController {
     }
 
     //按设备id查询维保记录
-    @GetMapping("/mRecord/did")
-    public List maintenanceRecordListByDname(String Did){
+    @GetMapping("/rRecord/did")
+    public List repairRecordListByDname(String Did){
         QueryWrapper<RepairRecord> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("did","did");
+        queryWrapper.eq("did",Did);
         List<RepairRecord> list = repairRecordMapper.selectList(queryWrapper);
         return list;
     }

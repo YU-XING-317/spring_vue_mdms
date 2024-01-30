@@ -126,7 +126,7 @@ export default {
 
     function init() {
       axios
-        .get("device/getDeviceByKeys", {
+        .get("/device", {
           dname: state.formQuery.dname,
           dtype: state.formQuery.dtype,
           supplier: state.formQuery.supplier,
@@ -155,7 +155,7 @@ export default {
         return;
       }
       axios
-        .post("device/insertDevice", {
+        .post("/device", {
           dname: state.addDevice.dname,
           dtype: state.addDevice.dtype,
           supplier: state.addDevice.supplier,
@@ -173,7 +173,7 @@ export default {
         return;
       }
       axios
-        .post("device/updateDevice", {
+        .put("/device", {
           did: device.did,
           dname: device.dname,
           dtype: state.reviseForm.dtype,

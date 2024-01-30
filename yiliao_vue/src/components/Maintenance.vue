@@ -142,18 +142,18 @@ export default {
       addMRecord: {
         did: "",
         eid: "",
-        mrTime: "",
-        mrEntity: "",
-        mrContent: "",
-        mrState: "未开始",
-        mrExp: "是",
-        mrMark: "",
+        mrtime: "",
+        mrentity: "",
+        mrcontent: "",
+        mrstate: "未开始",
+        mrexp: "是",
+        mrmark: "",
       },
       reviseFormVisible: false,
       reviseForm: {
-        mrState: "未开始",
-        mrExp: "是",
-        mrMark: "",
+        mrstate: "未开始",
+        mrexp: "是",
+        mrmark: "",
       },
       mrecord: [],
     });
@@ -161,7 +161,7 @@ export default {
     init();
     function init() {
       axios
-        .post("maintenanceRecord/getMaintenanceRecordByDName", {
+        .get("mRecord", {
           dname: state.formQuery.dname,
         })
         .then((response) => {
@@ -178,13 +178,13 @@ export default {
       if (
         state.addMRecord.did == "" ||
         state.addMRecord.eid == "" ||
-        state.addMRecord.mrTime == null ||
-        state.addMRecord.mrTime == "" ||
-        state.addMRecord.mrContent == null ||
-        state.addMRecord.mrContent == "" ||
-        state.addMRecord.mrEntity == "" ||
-        state.addMRecord.mrState == "" ||
-        state.addMRecord.mrExp == ""
+        state.addMRecord.mrtime == null ||
+        state.addMRecord.mrtime == "" ||
+        state.addMRecord.mrcontent == null ||
+        state.addMRecord.mrcontent == "" ||
+        state.addMRecord.mrentity == "" ||
+        state.addMRecord.mrstate == "" ||
+        state.addMRecord.mrexp == ""
       ) {
         ElMessage.warning("请完整填写维保记录信息！");
         return;
@@ -193,15 +193,15 @@ export default {
       // 将设备ID和员工ID传到后端
       // 增加一条维保记录
       axios
-        .post("maintenanceRecord/insertMaintenanceRecord", {
+        .post("mRecord", {
           did: state.addMRecord.did,
           eid: state.addMRecord.eid,
-          mrTime: state.addMRecord.mrTime,
-          mrContent: state.addMRecord.mrContent,
-          mrEntity: state.addMRecord.mrEntity,
-          mrState: state.addMRecord.mrState,
-          mrExp: state.addMRecord.mrExp,
-          mrMark: state.addMRecord.mrMark,
+          mrtime: state.addMRecord.mrtime,
+          mrcontent: state.addMRecord.mrcontent,
+          mrentity: state.addMRecord.mrentity,
+          mrstate: state.addMRecord.mrstate,
+          mrexp: state.addMRecord.mrexp,
+          mrmark: state.addMRecord.mrmark,
         })
         .then((response) => {
           if (response.data.includes("错误")) {
@@ -210,7 +210,7 @@ export default {
           } else {
             ElMessage.success(response.data);
           }
-          addMRecordVisible = false;
+          // addMRecordVisible = false;
         })
         .catch((error) => {
           console.error(error);
@@ -219,22 +219,22 @@ export default {
     // 根据设备Id修改维保记录
     const handleRevise = (mrecord) => {
       if (
-        state.reviseForm.mrState == "" ||
-        state.reviseForm.mrExp == "" ||
-        state.reviseForm.mrMark == ""
+        state.reviseForm.mrstate == "" ||
+        state.reviseForm.mrexp == "" ||
+        state.reviseForm.mrmark == ""
       ) {
         ElMessage.warning("请输入修改类型！");
         return;
       }
       axios
-        .post("maintenanceRecord/maintenanceRecord", {
-          mrId: mrecord.mrId,
-          mrTime: mrecord.mrTime,
-          mrContent: mrecord.mrTime,
-          mrEntity: mrecord.mrEntity,
-          mrState: state.reviseForm.mrState,
-          mrExp: state.reviseForm.mrExp,
-          mrMark: state.reviseForm.mrMark,
+        .put("mRecord", {
+          mrid: mrecord.mrid,
+          mrtime: mrecord.mrtime,
+          mrcontent: mrecord.mrtime,
+          mrentity: mrecord.mrentity,
+          mrstate: state.reviseForm.mrstate,
+          mrexp: state.reviseForm.mrexp,
+          mrmark: state.reviseForm.mrmark,
         })
         .then((response) => {
           if (response.data > 0) {

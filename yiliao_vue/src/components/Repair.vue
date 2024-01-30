@@ -21,7 +21,7 @@
           </el-form-item>
           <el-form-item label="维修时间">
             <el-date-picker
-              v-model="addRRecord.rrTime"
+              v-model="addRRecord.rrtime"
               palceholder="选择一个时间"
               range-separator="-"
               type="date"
@@ -29,26 +29,26 @@
             ></el-date-picker>
           </el-form-item>
           <el-form-item label="维修内容">
-            <el-input v-model="addRRecord.rrContent"></el-input>
+            <el-input v-model="addRRecord.rrcontent"></el-input>
           </el-form-item>
           <el-form-item label="维修单位">
             <el-input v-model="addRRecord.rrEntity"></el-input>
           </el-form-item>
           <el-form-item label="状态">
-            <el-select v-model="addRRecord.rrState">
+            <el-select v-model="addRRecord.rrstate">
               <el-option label="未检验" value="未检验" />
               <el-option label="已检验" value="已检验" />
             </el-select>
           </el-form-item>
           <el-form-item label="检验结果">
-            <el-radio-group v-model="addRRecord.rrResult">
+            <el-radio-group v-model="addRRecord.rrresult">
               <el-radio label="合格" value="合格"></el-radio>
               <el-radio label="不合格" value="不合格"></el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="备注">
             <el-input
-              v-model="addRRecord.rrMark"
+              v-model="addRRecord.rrmark"
               placeholder="不超过20个字"
               type="textarea"
             ></el-input>
@@ -67,14 +67,14 @@
         <template #default="props">
           <p style="margin: 10px; text-align: left">
             <b>备注: </b>&nbsp;
-            {{ props.row.rrMark == "" ? "无" : props.row.rrMark }}
+            {{ props.row.rrmark == "" ? "无" : props.row.rrmark }}
           </p>
         </template>
       </el-table-column>
-      <el-table-column label="维修时间" prop="rrTime"></el-table-column>
-      <el-table-column label="维修内容" prop="rrContent"></el-table-column>
-      <el-table-column label="状态" prop="rrState"></el-table-column>
-      <el-table-column label="维修结果" prop="rrResult"></el-table-column>
+      <el-table-column label="维修时间" prop="rrtime"></el-table-column>
+      <el-table-column label="维修内容" prop="rrcontent"></el-table-column>
+      <el-table-column label="状态" prop="rrstate"></el-table-column>
+      <el-table-column label="维修结果" prop="rrresult"></el-table-column>
       <el-table-column label="维修人员" prop="employer.ename"></el-table-column>
       <el-table-column label="维修设备" prop="device.dname"></el-table-column>
       <el-table-column align="center" label="操作">
@@ -88,20 +88,20 @@
           <el-dialog v-model="reviseFormVisible" title="修改记录">
             <el-form :model="reviseForm">
               <el-form-item label="状态">
-                <el-select v-model="reviseForm.rrState">
+                <el-select v-model="reviseForm.rrstate">
                   <el-option label="未检验" value="未检验" />
                   <el-option label="已检验" value="已检验" />
                 </el-select>
               </el-form-item>
               <el-form-item label="检验结果">
-                <el-radio-group v-model="reviseForm.rrResult">
+                <el-radio-group v-model="reviseForm.rrresult">
                   <el-radio label="合格" value="合格"></el-radio>
                   <el-radio label="不合格" value="不合格"></el-radio>
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="备注">
                 <el-input
-                  v-model="reviseForm.rrMark"
+                  v-model="reviseForm.rrmark"
                   placeholder="不超过20个字"
                   type="textarea"
                 ></el-input>
@@ -139,26 +139,26 @@ export default {
       addRRecord: {
         did: "",
         eid: "",
-        rrTime: "",
-        rrContent: "",
-        rrState: "未检验",
-        rrResult: "合格",
-        rrMark: "",
+        rrtime: "",
+        rrcontent: "",
+        rrstate: "未检验",
+        rrresult: "合格",
+        rrmark: "",
       },
       reviseFormVisible: false,
       reviseForm: {
-        rrState: "未检验",
-        rrResult: "合格",
-        rrMark: "",
+        rrstate: "未检验",
+        rrresult: "合格",
+        rrmark: "",
       },
       rrecord: [
         {
           rrId: "123",
-          rrTime: "2023-12-01",
-          rrContent: "aabcddfas",
-          rrState: "未检验",
-          rrResult: "合格",
-          rrMark: "",
+          rrtime: "2023-12-01",
+          rrcontent: "aabcddfas",
+          rrstate: "未检验",
+          rrresult: "合格",
+          rrmark: "",
           device: { dname: "hello" },
           employer: { ename: "gegegegege" },
         },
@@ -166,7 +166,7 @@ export default {
     });
     function init() {
       axios
-        .post("repairRecord/getRepairRecordByDName", {
+        .get("rRecord", {
           dname: state.formQuery.dname,
         })
         .then((response) => {
@@ -184,10 +184,10 @@ export default {
       if (
         state.addRRecord.did == "" ||
         state.addRRecord.eid == "" ||
-        state.addRRecord.rrTime == "" ||
-        state.addRRecord.rrContent == "" ||
-        state.addRRecord.rrState == "" ||
-        state.addRRecord.rrResult == ""
+        state.addRRecord.rrtime == "" ||
+        state.addRRecord.rrcontent == "" ||
+        state.addRRecord.rrstate == "" ||
+        state.addRRecord.rrresult == ""
       ) {
         ElMessage.warning("请完整填写维检验记录信息！");
         return;
@@ -196,14 +196,14 @@ export default {
       // 将设备ID和员工ID传到后端
       // 增加一条维保记录
       axios
-        .post("repairRecord/insertRepairRecord", {
+        .post("repairRecord", {
           did: state.addRRecord.did,
           eid: state.addRRecord.eid,
-          rrTime: state.addRRecord.rrTime,
-          rrContent: state.addRRecord.rrContent,
-          rrState: state.addRRecord.rrState,
-          rrResult: state.addRRecord.rrResult,
-          rrMark: state.addRRecord.rrMark,
+          rrtime: state.addRRecord.rrtime,
+          rrcontent: state.addRRecord.rrcontent,
+          rrstate: state.addRRecord.rrstate,
+          rrresult: state.addRRecord.rrresult,
+          rrmark: state.addRRecord.rrmark,
         })
         .then((response) => {
           if (response.data.includes("错误")) {
@@ -212,7 +212,7 @@ export default {
           } else {
             ElMessage.success(response.data);
           }
-          addRRecordVisible = false;
+          //addRRecordVisible = false;
         })
         .catch((error) => {
           console.error(error);
@@ -220,18 +220,18 @@ export default {
     }
     // 根据设备Id修改维保记录
     function handleRevise(rrecord) {
-      if (state.reviseForm.rrState == "" || state.reviseForm.rrResult == "") {
+      if (state.reviseForm.rrstate == "" || state.reviseForm.rrresult == "") {
         ElMessage.warning("请输入完整信息！");
         return;
       }
       axios
-        .post("repairRecord/alterRepairRecord", {
+        .put("repairRecord", {
           rrId: rrecord.rrId,
-          rrTime: rrecord.rrTime,
-          rrContent: rrecord.rrContent,
-          rrState: state.reviseForm.rrState,
-          rrResult: state.reviseForm.rrResult,
-          rrMark: state.reviseForm.rrMark,
+          rrtime: rrecord.rrtime,
+          rrcontent: rrecord.rrcontent,
+          rrstate: state.reviseForm.rrstate,
+          rrresult: state.reviseForm.rrresult,
+          rrmark: state.reviseForm.rrmark,
         })
         .then((response) => {
           if (response.data > 0) {

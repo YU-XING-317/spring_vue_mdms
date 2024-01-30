@@ -20,7 +20,7 @@ public class MaintenanceRecordController {
     @PostMapping("/mRecord")
     public String maintenanceRecordInsert(MaintenanceRecord maintenanceRecord){
         int i;
-        // System.out.println(device);
+        System.out.println(maintenanceRecord);
         i = maintenanceRecordMapper.insert(maintenanceRecord);
         if(i > 0) {
             return "插入成功";

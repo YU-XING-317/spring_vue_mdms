@@ -111,6 +111,7 @@ export default {
       },
       addDeviceVisible: false,
       addDevice: {
+        did:"",
         dname: "",
         dtype: "新产品",
         supplier: "",
@@ -155,7 +156,8 @@ export default {
         return;
       }
       axios
-        .post("/device", {
+        .post("/device",{
+          did: null,
           dname: state.addDevice.dname,
           dtype: state.addDevice.dtype,
           supplier: state.addDevice.supplier,

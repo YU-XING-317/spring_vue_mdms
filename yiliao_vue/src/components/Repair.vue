@@ -196,7 +196,7 @@ export default {
       // 将设备ID和员工ID传到后端
       // 增加一条维保记录
       axios
-        .post("repairRecord", {
+        .post("rRecord", {
           did: state.addRRecord.did,
           eid: state.addRRecord.eid,
           rrtime: state.addRRecord.rrtime,

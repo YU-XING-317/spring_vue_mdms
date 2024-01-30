@@ -4,10 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mdms.yiliao.entity.RepairRecord;
 import com.mdms.yiliao.mapper.RepairRecordMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,9 +15,11 @@ public class RepairRecordController {
 
     //添加维保记录
     @PostMapping("/rRecord")
-    public String repairRecordInsert(RepairRecord repairRecord){
+    public String repairRecordInsert(@RequestBody RepairRecord repairRecord){
         int i;
-        // System.out.println(device);
+        i = repairRecordMapper.selectCount(null) + 1;
+        repairRecord.setRrid(Integer.toString(i));
+        System.out.println(repairRecord);
         i = repairRecordMapper.insert(repairRecord);
         if(i > 0) {
             return "插入成功";

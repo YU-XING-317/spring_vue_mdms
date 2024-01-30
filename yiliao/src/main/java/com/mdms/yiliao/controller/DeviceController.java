@@ -3,10 +3,7 @@ package com.mdms.yiliao.controller;
 import com.mdms.yiliao.entity.Device;
 import com.mdms.yiliao.mapper.DeviceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,8 +15,12 @@ public class DeviceController {
 
     //插入设备
     @PostMapping("/device")
-    public String deviceInsert(Device device){
+    public String deviceInsert(@RequestBody Device device){
+        System.out.println(device);
         int i;
+        i = deviceMapper.selectCount(null);
+        String j = Integer.toString((i+1));
+        device.setDid(j);
         // System.out.println(device);
         i = deviceMapper.insert(device);
         if(i > 0) {
@@ -31,7 +32,7 @@ public class DeviceController {
 
     //修改设备信息
     @PutMapping("/device")
-    public int deviceUpdate(Device device){
+    public int deviceUpdate(@RequestBody Device device){
         return deviceMapper.updateById(device);
     }
 

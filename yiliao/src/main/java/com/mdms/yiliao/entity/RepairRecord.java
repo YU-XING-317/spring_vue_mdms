@@ -19,6 +19,10 @@ public class RepairRecord {
     private String rrresult;
     // 检修备注
     private String rrmark;
+    // 设备id
+    private String did;
+    // 工程师id
+    private String eid;
 
     public String getRrid() {
         return rrid;
@@ -68,6 +72,22 @@ public class RepairRecord {
         this.rrmark = rrmark;
     }
 
+    public String getDid() {
+        return did;
+    }
+
+    public void setDid(String did) {
+        this.did = did;
+    }
+
+    public String getEid() {
+        return eid;
+    }
+
+    public void setEid(String eid) {
+        this.eid = eid;
+    }
+
     @Override
     public String toString() {
         return "RepairRecord{" +
@@ -77,6 +97,8 @@ public class RepairRecord {
                 ", rrstate='" + rrstate + '\'' +
                 ", rrresult='" + rrresult + '\'' +
                 ", rrmark='" + rrmark + '\'' +
+                ", did='" + did + '\'' +
+                ", eid='" + eid + '\'' +
                 '}';
     }
 }

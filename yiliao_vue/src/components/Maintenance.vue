@@ -21,7 +21,7 @@
           </el-form-item>
           <el-form-item label="维保时间">
             <el-date-picker
-              v-model="addMRecord.mrTime"
+              v-model="addMRecord.mrtime"
               palceholder="选择一个时间"
               range-separator="-"
               type="date"
@@ -29,27 +29,27 @@
             ></el-date-picker>
           </el-form-item>
           <el-form-item label="维保项">
-            <el-input v-model="addMRecord.mrContent"></el-input>
+            <el-input v-model="addMRecord.mrcontent"></el-input>
           </el-form-item>
           <el-form-item label="维保单位">
-            <el-input v-model="addMRecord.mrEntity"></el-input>
+            <el-input v-model="addMRecord.mrentity"></el-input>
           </el-form-item>
           <el-form-item label="状态">
-            <el-select v-model="addMRecord.mrState">
+            <el-select v-model="addMRecord.mrstate">
               <el-option label="未开始" value="未开始" />
               <el-option label="进行中" value="进行中" />
               <el-option label="已完成" value="已完成" />
             </el-select>
           </el-form-item>
           <el-form-item label="是否超期未保">
-            <el-radio-group v-model="addMRecord.mrExp">
+            <el-radio-group v-model="addMRecord.mrexp">
               <el-radio label="是" value="是"></el-radio>
               <el-radio label="否" value="否"></el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="备注">
             <el-input
-              v-model="addMRecord.mrMark"
+              v-model="addMRecord.mrmakr"
               placeholder="不超过20个字"
               type="textarea"
             ></el-input>
@@ -68,15 +68,15 @@
         <template #default="props">
           <p style="margin: 10px; text-align: left">
             <b>备注: </b>&nbsp;
-            {{ props.row.mrMark == "" ? "无" : props.row.mrMark }}
+            {{ props.row.mrmakr == "" ? "无" : props.row.mrmakr }}
           </p>
         </template>
       </el-table-column>
-      <el-table-column label="维保时间" prop="mrTime"></el-table-column>
-      <el-table-column label="维保项" prop="mrContent"></el-table-column>
-      <el-table-column label="维保单位" prop="mrEntity"></el-table-column>
-      <el-table-column label="是否到期未保" prop="mrExp"></el-table-column>
-      <el-table-column label="状态" prop="mrState"></el-table-column>
+      <el-table-column label="维保时间" prop="mrtime"></el-table-column>
+      <el-table-column label="维保项" prop="mrcontent"></el-table-column>
+      <el-table-column label="维保单位" prop="mrentity"></el-table-column>
+      <el-table-column label="是否到期未保" prop="mrexp"></el-table-column>
+      <el-table-column label="状态" prop="mrstate"></el-table-column>
       <el-table-column label="维保人员" prop="employer.ename"></el-table-column>
       <el-table-column label="维保设备" prop="device.dname"></el-table-column>
       <el-table-column align="center" label="操作">
@@ -90,21 +90,21 @@
           <el-dialog v-model="reviseFormVisible" title="修改记录">
             <el-form :model="reviseForm">
               <el-form-item label="状态">
-                <el-select v-model="reviseForm.mrState">
+                <el-select v-model="reviseForm.mrstate">
                   <el-option label="未开始" value="未开始" />
                   <el-option label="进行中" value="进行中" />
                   <el-option label="已完成" value="已完成" />
                 </el-select>
               </el-form-item>
               <el-form-item label="是否超期未保">
-                <el-radio-group v-model="reviseForm.mrExp">
+                <el-radio-group v-model="reviseForm.mrexp">
                   <el-radio label="是" value="是"></el-radio>
                   <el-radio label="否" value="否"></el-radio>
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="备注">
                 <el-input
-                  v-model="reviseForm.mrMark"
+                  v-model="reviseForm.mrmark"
                   placeholder="不超过20个字"
                   type="textarea"
                 ></el-input>

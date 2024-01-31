@@ -70,7 +70,7 @@
           <el-button
             size="small"
             type="primary"
-            @click=getRowReviseDate(scope.row)
+            @click=getRowReviseData(scope.row)
             >修改</el-button
           >
           <el-dialog v-model="reviseFormVisible" title="修改产品">
@@ -111,9 +111,12 @@ export default {
   setup() {
     const state = reactive({
       formQuery: {
+        did: "",
         dtype: "",
         dname: "",
         supplier: "",
+        hospital: "",
+        department: "",
       },
       addDeviceVisible: false,
       addDevice: {
@@ -129,40 +132,24 @@ export default {
         dtype: "",
       },
       reviseData: {},
-      device: [
-        {
-          did: "12",
-          dname: "12",
-          dtype: "新产品",
-          supplier: "",
-          hospital: "",
-          department: "",
-        },
-        {
-          did: "23",
-          dname: "23",
-          dtype: "新产品",
-          supplier: "",
-          hospital: "",
-          department: "",
-        },
-      ],
+      device: [],
     });
 
     function init() {
-      axios
-        .get("/device", {
+      axios({
+        url: "/device",
+        params: {
           dname: state.formQuery.dname,
           dtype: state.formQuery.dtype,
           supplier: state.formQuery.supplier,
-        })
-        .then((response) => {
-          state.device = response.data;
+        },
+        method:"get"
+      }).then((response) => {
+        state.device = response.data;
           //console.log(state.device);
-        })
-        .catch((error) => {
+      }).catch((error) => {
           console.error(error);
-        });
+      });
     }
     init();
 
@@ -237,6 +224,7 @@ export default {
       state.formQuery.dtype = "";
       state.formQuery.dname = "";
       state.formQuery.supplier = "";
+      init()
     }
     return {
       ...toRefs(state),

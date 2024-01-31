@@ -1,8 +1,10 @@
 package com.mdms.yiliao.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.util.Date;
+import java.util.List;
 
 // 维保记录类
 public class MaintenanceRecord {
@@ -25,6 +27,9 @@ public class MaintenanceRecord {
     private String did;
     // 维保工程师Id
     private String eid;
+
+    @TableField(exist = false)
+    private List<Device> devices;
 
     @Override
     public String toString() {

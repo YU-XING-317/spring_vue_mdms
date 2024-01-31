@@ -2,8 +2,8 @@
   <div class="wrapper">
     <div class="table-control">
       <el-form :inline="true" :model="formQuery" class="form-query">
-        <el-form-item label="设备名称">
-          <el-input v-model="formQuery.dname"></el-input>
+        <el-form-item label="设备Id">
+          <el-input v-model="formQuery.did"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="tableSearch">搜索</el-button>
@@ -136,7 +136,7 @@ export default {
   setup() {
     const state = reactive({
       formQuery: {
-        dname: "",
+        did: "",
       },
       addMRecordVisible: false,
       addMRecord: {
@@ -161,17 +161,18 @@ export default {
 
     init();
     function init() {
-      axios
-        .get("mRecord", {
-          dname: state.formQuery.dname,
-        })
-        .then((response) => {
-          state.mrecord = response.data;
-          console.log(state.mrecord);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      axios({
+        url: "/mRecord",
+        params:{
+          did: state.formQuery.did,
+        },
+        method:"get"
+      }).then((response) => {
+        state.mrecord = response.data;
+        console.log(state.mrecord);
+      }).catch((error) => {
+        console.error(error);
+      });
     }
 
     // 增加维保记录，无did

@@ -2,8 +2,8 @@
   <div class="wrapper">
     <div class="table-control">
       <el-form :inline="true" :model="formQuery" class="form-query">
-        <el-form-item label="设备名称">
-          <el-input v-model="formQuery.dname"></el-input>
+        <el-form-item label="设备ID">
+          <el-input v-model="formQuery.did"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="tableSearch">搜索</el-button>
@@ -133,7 +133,7 @@ export default {
   setup() {
     const state = reactive({
       formQuery: {
-        dname: "",
+        did: "",
       },
       addRRecordVisible: false,
       addRRecord: {
@@ -166,17 +166,18 @@ export default {
       ],
     });
     function init() {
-      axios
-        .get("rRecord", {
-          dname: state.formQuery.dname,
-        })
-        .then((response) => {
-          state.rrecord = response.data;
-          console.log(state.rrecord); // 控制台输出结果
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      axios({
+        url: "rRecord",
+        params:{
+          did: state.formQuery.did,
+        },
+        method:"get"
+      }).then((response) => {
+        state.rrecord = response.data;
+        console.log(state.rrecord); // 控制台输出结果
+      }).catch((error) => {
+        console.error(error);
+      });
     }
     init();
 

@@ -263,7 +263,8 @@ export default {
     };
 
     const resetSearch = () => {
-      state.formQuery.dname = "";
+      state.formQuery.did = "";
+      init()
     };
     return {
       ...toRefs(state),

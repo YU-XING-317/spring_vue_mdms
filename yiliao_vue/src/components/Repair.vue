@@ -260,7 +260,8 @@ export default {
     }
 
     function resetSearch() {
-      state.formQuery.dname = "";
+      state.formQuery.did = "";
+      init()
     }
     return {
       ...toRefs(state),

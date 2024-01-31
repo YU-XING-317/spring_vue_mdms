@@ -84,7 +84,7 @@
           <el-button
             size="small"
             type="primary"
-            @click="reviseFormVisible = true"
+            @click="getRowReviseData(scope.row)"
             >修改</el-button
           >
           <el-dialog v-model="reviseFormVisible" title="修改记录">
@@ -113,7 +113,7 @@
             <template #footer>
               <span class="dialog-footer">
                 <el-button @click="reviseFormVisible = false">取消</el-button>
-                <el-button type="primary" @click="handleRevise(scope.row)">
+                <el-button type="primary" @click="handleRevise(ReviseData)">
                   确认
                 </el-button>
               </span>
@@ -150,6 +150,7 @@ export default {
         mrmark: "",
       },
       reviseFormVisible: false,
+      ReviseData: {},
       reviseForm: {
         mrstate: "未开始",
         mrexp: "是",
@@ -216,6 +217,12 @@ export default {
           console.error(error);
         });
     };
+
+    const getRowReviseData = (mrecord) => {
+      state.ReviseData = mrecord;
+      state.reviseFormVisible = true;
+    };
+
     // 根据设备Id修改维保记录
     const handleRevise = (mrecord) => {
       if (
@@ -227,7 +234,7 @@ export default {
         return;
       }
       axios
-        .put("mRecord", {
+        .put("mRecord/mrid", {
           mrid: mrecord.mrid,
           mrtime: mrecord.mrtime,
           mrcontent: mrecord.mrtime,
@@ -259,6 +266,7 @@ export default {
     };
     return {
       ...toRefs(state),
+      getRowReviseData,
       handleRevise,
       tableSearch,
       resetSearch,

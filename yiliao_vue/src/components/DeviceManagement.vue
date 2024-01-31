@@ -70,19 +70,25 @@
           <el-button
             size="small"
             type="primary"
-            @click="reviseFormVisible = true"
+            @click=getRowReviseDate(scope.row)
             >修改</el-button
           >
           <el-dialog v-model="reviseFormVisible" title="修改产品">
             <el-form :model="reviseForm">
               <el-form-item label="类型">
-                <el-input v-model="reviseForm.dtype"></el-input>
+                <el-select v-model="reviseForm.dtype">
+                  <el-option label="销售" value="销售" />
+                  <el-option label="租赁" value="租赁" />
+                  <el-option label="折扣" value="折扣" />
+                  <el-option label="新产品" value="新产品" />
+                </el-select>
+                <!--<el-input v-model="reviseForm.dtype"></el-input>-->
               </el-form-item>
             </el-form>
             <template #footer>
               <span class="dialog-footer">
                 <el-button @click="reviseFormVisible = false">取消</el-button>
-                <el-button type="primary" @click="handleRevise(scope.row)">
+                <el-button type="primary" @click="handleRevise(reviseData)">
                   确认
                 </el-button>
               </span>
@@ -122,7 +128,25 @@ export default {
       reviseForm: {
         dtype: "",
       },
-      device: [],
+      reviseData: {},
+      device: [
+        {
+          did: "12",
+          dname: "12",
+          dtype: "新产品",
+          supplier: "",
+          hospital: "",
+          department: "",
+        },
+        {
+          did: "23",
+          dname: "23",
+          dtype: "新产品",
+          supplier: "",
+          hospital: "",
+          department: "",
+        },
+      ],
     });
 
     function init() {
@@ -134,7 +158,7 @@ export default {
         })
         .then((response) => {
           state.device = response.data;
-          console.log(state.device);
+          //console.log(state.device);
         })
         .catch((error) => {
           console.error(error);
@@ -152,7 +176,7 @@ export default {
         state.addDevice.department == ""
       ) {
         ElMessage({ message: "请完整填写设备信息！", type: "warning" });
-        console.log("fd");
+        //console.log("fd");
         return;
       }
       axios
@@ -168,10 +192,17 @@ export default {
           console.error(error);
         });
     }
+
+    // 获取修改行的数据
+    const getRowReviseData = (device) => {
+      state.reviseData = device;
+      state.reviseFormVisible = true;
+    };
+
     // 根据设备Id修改设备信息
     function handleRevise(device) {
-      if (dtype == "") {
-        ElMessage.warning("请输入修改类型！");
+      if (state.reviseForm.dtype == "") {
+        ElMessage.warning("请选择修改类型！");
         return;
       }
       axios
@@ -209,6 +240,7 @@ export default {
     }
     return {
       ...toRefs(state),
+      getRowReviseData,
       handleRevise,
       tableSearch,
       resetSearch,

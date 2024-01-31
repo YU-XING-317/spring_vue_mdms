@@ -82,7 +82,7 @@
           <el-button
             size="small"
             type="primary"
-            @click="reviseFormVisible = true"
+            @click="getRowReviseData(scope.row)"
             >修改</el-button
           >
           <el-dialog v-model="reviseFormVisible" title="修改记录">
@@ -110,7 +110,7 @@
             <template #footer>
               <span class="dialog-footer">
                 <el-button @click="reviseFormVisible = false">取消</el-button>
-                <el-button type="primary" @click="handleRevise(scope.row)">
+                 <el-button type="primary" @click="handleRevise(ReviseData)">
                   确认
                 </el-button>
               </span>
@@ -146,6 +146,7 @@ export default {
         rrmark: "",
       },
       reviseFormVisible: false,
+      ReviseData: {},
       reviseForm: {
         rrstate: "未检验",
         rrresult: "合格",
@@ -218,6 +219,12 @@ export default {
           console.error(error);
         });
     }
+
+    const getRowReviseData = (rrecord) => {
+      state.ReviseData = rrecord;
+      state.reviseFormVisible = true;
+    };
+
     // 根据设备Id修改维保记录
     function handleRevise(rrecord) {
       if (state.reviseForm.rrstate == "" || state.reviseForm.rrresult == "") {
@@ -256,6 +263,7 @@ export default {
     }
     return {
       ...toRefs(state),
+      getRowReviseData,
       handleRevise,
       tableSearch,
       resetSearch,

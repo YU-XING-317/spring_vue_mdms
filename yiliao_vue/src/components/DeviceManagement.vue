@@ -175,6 +175,16 @@ export default {
           hospital: state.addDevice.hospital,
           department: state.addDevice.department,
         })
+          .then((response) => {
+
+          init();
+          //清空表单
+          state.addDevice.dname = "";
+          state.addDevice.dtype = "新产品";
+          state.addDevice.supplier = "";
+          state.addDevice.hospital = "";
+          state.addDevice.department = "";
+      })
         .catch((error) => {
           console.error(error);
         });

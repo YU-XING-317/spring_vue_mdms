@@ -2,6 +2,7 @@ package com.mdms.yiliao.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mdms.yiliao.entity.Device;
+import com.mdms.yiliao.entity.Did;
 import com.mdms.yiliao.mapper.DeviceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -55,7 +56,17 @@ public class DeviceController {
         System.out.println(device);
         QueryWrapper<Device> queryWrapper = new QueryWrapper<>(device);
         //queryWrapper.allEq({ dname:device.getDname(), dtype:device.getDtype(), supplier:device.getSupplier() },false);
-        List<Device> list = deviceMapper.selectList(queryWrapper);
+        List<Device> list = deviceMapper.listAllDevice();
+        System.out.println(list);
+        return list;
+    }
+
+    //获取设备id列表
+    @GetMapping("/device/id")
+    public List devicesIdList(){
+        System.out.println("调用查询设备id");
+
+        List<Did> list = deviceMapper.listAllDeviceId();
         System.out.println(list);
         return list;
     }

@@ -14,7 +14,16 @@
       <el-dialog v-model="addRRecordVisible" title="增加维修记录">
         <el-form :model="addRRecord" class="add-rrecord" size="small">
           <el-form-item label="维修设备注册编号">
-            <el-input v-model="addRRecord.did"></el-input>
+<!--            <el-input v-model="addRRecord.did"></el-input>-->
+            <el-select v-model="addRRecord.did" placeholder="请选择" @focus="getids">
+              <el-option
+                  v-for="item in ids"
+                  :key="item.did"
+                  :label="item.did"
+                  :value="item.did"
+              >
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="维修人员编号">
             <el-input v-model="addRRecord.eid"></el-input>
@@ -36,14 +45,14 @@
           </el-form-item>
           <el-form-item label="状态">
             <el-select v-model="addRRecord.rrstate">
-              <el-option label="未检验" value="未检验" />
-              <el-option label="已检验" value="已检验" />
+              <el-option label="未检验" value="0" />
+              <el-option label="已检验" value="1" />
             </el-select>
           </el-form-item>
           <el-form-item label="检验结果">
             <el-radio-group v-model="addRRecord.rrresult">
-              <el-radio label="合格" value="合格"></el-radio>
-              <el-radio label="不合格" value="不合格"></el-radio>
+              <el-radio label="1" value="1">合格</el-radio>
+              <el-radio label="2" value="2">不合格</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="备注">
@@ -63,6 +72,7 @@
       </el-dialog>
     </div>
     <el-table :data="rrecord" height="88%" stripe>
+
       <el-table-column type="expand">
         <template #default="props">
           <p style="margin: 10px; text-align: left">
@@ -71,12 +81,23 @@
           </p>
         </template>
       </el-table-column>
+      <el-table-column label="维修记录编号" prop="rrid"></el-table-column>
       <el-table-column label="维修时间" prop="rrtime"></el-table-column>
       <el-table-column label="维修内容" prop="rrcontent"></el-table-column>
-      <el-table-column label="状态" prop="rrstate"></el-table-column>
-      <el-table-column label="维修结果" prop="rrresult"></el-table-column>
-      <el-table-column label="维修人员" prop="employer.ename"></el-table-column>
-      <el-table-column label="维修设备" prop="device.dname"></el-table-column>
+      <el-table-column label="状态" prop="rrstate">
+        <template v-slot="scope">
+          <p v-if="scope.row.rrstate=='0'">未检验</p>
+          <p v-else-if="scope.row.rrstate=='1'">已检验</p>
+        </template>
+      </el-table-column>
+      <el-table-column label="维修结果" prop="rrresult">
+        <template v-slot="scope">
+          <p v-if="scope.row.rrresult=='1'">合格</p>
+          <p v-else-if="scope.row.rrresult=='2'">不合格</p>
+        </template>
+      </el-table-column>
+      <el-table-column label="维修人员id" prop="eid"></el-table-column>
+      <el-table-column label="维修设备id" prop="did"></el-table-column>
       <el-table-column align="center" label="操作">
         <template #default="scope">
           <el-button
@@ -89,14 +110,14 @@
             <el-form :model="reviseForm">
               <el-form-item label="状态">
                 <el-select v-model="reviseForm.rrstate">
-                  <el-option label="未检验" value="未检验" />
-                  <el-option label="已检验" value="已检验" />
+                  <el-option label="未检验" value="0" />
+                  <el-option label="已检验" value="1" />
                 </el-select>
               </el-form-item>
               <el-form-item label="检验结果">
                 <el-radio-group v-model="reviseForm.rrresult">
-                  <el-radio label="合格" value="合格"></el-radio>
-                  <el-radio label="不合格" value="不合格"></el-radio>
+                  <el-radio label="1" value="1">合格</el-radio>
+                  <el-radio label="2" value="2">不合格</el-radio>
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="备注">
@@ -132,6 +153,7 @@ axios.defaults.baseURL = "http://localhost:8080/yiliao";
 export default {
   setup() {
     const state = reactive({
+      ids:[],
       formQuery: {
         did: "",
       },
@@ -141,20 +163,20 @@ export default {
         eid: "",
         rrtime: "",
         rrcontent: "",
-        rrstate: "未检验",
-        rrresult: "合格",
+        rrstate: "0",
+        rrresult: "1",
         rrmark: "",
       },
       reviseFormVisible: false,
       ReviseData: {},
       reviseForm: {
-        rrstate: "未检验",
-        rrresult: "合格",
+        rrstate: "0",
+        rrresult: "1",
         rrmark: "",
       },
       rrecord: [
         {
-          rrId: "123",
+          rrid: "123",
           rrtime: "2023-12-01",
           rrcontent: "aabcddfas",
           rrstate: "未检验",
@@ -213,12 +235,38 @@ export default {
             return;
           } else {
             ElMessage.success(response.data);
+            init();
           }
           //addRRecordVisible = false;
         })
         .catch((error) => {
           console.error(error);
         });
+      // 清空表单
+      state.addRRecord = {
+        did: "",
+        eid: "",
+        rrtime: "",
+        rrcontent: "",
+        rrstate: "0",
+        rrresult: "1",
+        rrmark: "",
+      };
+      // 刷新页面
+      init();
+    }
+
+    //获取所有设备id
+    function getids(){
+      axios({
+        url: "/device/id",
+        method: "get",
+      }).then((response) => {
+        state.ids = response.data;
+        console.log(response);
+      }).catch((error) => {
+        console.error(error);
+      });
     }
 
     const getRowReviseData = (rrecord) => {
@@ -232,9 +280,10 @@ export default {
         ElMessage.warning("请输入完整信息！");
         return;
       }
+      console.log(rrecord);
       axios
         .put("repairRecord", {
-          rrId: rrecord.rrId,
+          rrid: rrecord.rrid,
           rrtime: rrecord.rrtime,
           rrcontent: rrecord.rrcontent,
           rrstate: state.reviseForm.rrstate,
@@ -270,6 +319,7 @@ export default {
       tableSearch,
       resetSearch,
       addRRecordNoId,
+      getids,
     };
   },
 };

@@ -12,9 +12,19 @@
         </el-form-item>
       </el-form>
       <el-dialog v-model="addMRecordVisible" title="增加维保记录">
-        <el-form :model="addMRecord" class="add-mrecord" size="small">
+        <el-form ref="addForm" :model="addMRecord" class="add-mrecord" size="small" >
           <el-form-item label="维保设备注册编号">
-            <el-input v-model="addMRecord.did"></el-input>
+<!--            <el-input v-model="addMRecord.did"></el-input>-->
+            <el-select v-model="addMRecord.did" placeholder="请选择" @focus="getids">
+              <el-option
+                  v-for="item in ids"
+                  :key="item.did"
+                  :label="item.did"
+                  :value="item.did"
+              >
+              </el-option>
+            </el-select>
+
           </el-form-item>
           <el-form-item label="维保人员编号">
             <el-input v-model="addMRecord.eid"></el-input>
@@ -36,15 +46,15 @@
           </el-form-item>
           <el-form-item label="状态">
             <el-select v-model="addMRecord.mrstate">
-              <el-option label="未开始" value="未开始" />
-              <el-option label="进行中" value="进行中" />
-              <el-option label="已完成" value="已完成" />
+              <el-option label="未开始" value="0" />
+              <el-option label="进行中" value="1" />
+              <el-option label="已完成" value="2" />
             </el-select>
           </el-form-item>
           <el-form-item label="是否超期未保">
             <el-radio-group v-model="addMRecord.mrexp">
-              <el-radio label="是" value="是"></el-radio>
-              <el-radio label="否" value="否"></el-radio>
+              <el-radio label="1" value="1">是</el-radio>
+              <el-radio label="0" value="0">否</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="备注">
@@ -75,8 +85,20 @@
       <el-table-column label="维保时间" prop="mrtime"></el-table-column>
       <el-table-column label="维保项" prop="mrcontent"></el-table-column>
       <el-table-column label="维保单位" prop="mrentity"></el-table-column>
-      <el-table-column label="是否到期未保" prop="mrexp"></el-table-column>
-      <el-table-column label="状态" prop="mrstate"></el-table-column>
+      <el-table-column label="是否到期未保" prop="mrexp" >
+        <template v-slot="scope">
+          <p v-if="scope.row.mrexp=='0'">否</p>
+          <p v-else-if="scope.row.mrexp=='1'">是</p>
+        </template>
+      </el-table-column>
+      <el-table-column label="状态" prop="mrstate" >
+        <template v-slot="scope">
+        <p v-if="scope.row.mrstate=='0'">未开始</p>
+        <p v-else-if="scope.row.mrstate=='1'">进行中</p>
+        <p v-else-if="scope.row.mrstate=='2'">已完成</p>
+      </template>
+      </el-table-column>
+
       <el-table-column label="维保人员" prop="employer.ename"></el-table-column>
       <el-table-column label="维保设备" prop="device.dname"></el-table-column>
       <el-table-column align="center" label="操作">
@@ -91,15 +113,15 @@
             <el-form :model="reviseForm">
               <el-form-item label="状态">
                 <el-select v-model="reviseForm.mrstate">
-                  <el-option label="未开始" value="未开始" />
-                  <el-option label="进行中" value="进行中" />
-                  <el-option label="已完成" value="已完成" />
+                  <el-option label="未开始" value="0" />
+                  <el-option label="进行中" value="1" />
+                  <el-option label="已完成" value="2" />
                 </el-select>
               </el-form-item>
               <el-form-item label="是否超期未保">
                 <el-radio-group v-model="reviseForm.mrexp">
-                  <el-radio label="是" value="是"></el-radio>
-                  <el-radio label="否" value="否"></el-radio>
+                  <el-radio label="1" value="1">是</el-radio>
+                  <el-radio label="0" value="0">否</el-radio>
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="备注">
@@ -135,6 +157,7 @@ axios.defaults.baseURL = "http://localhost:8080/yiliao";
 export default {
   setup() {
     const state = reactive({
+      ids:{},
       formQuery: {
         did: "",
       },
@@ -145,21 +168,22 @@ export default {
         mrtime: "",
         mrentity: "",
         mrcontent: "",
-        mrstate: "未开始",
-        mrexp: "是",
+        mrstate: "0",
+        mrexp: "1",
         mrmark: "",
       },
       reviseFormVisible: false,
       ReviseData: {},
       reviseForm: {
-        mrstate: "未开始",
-        mrexp: "是",
+        mrstate: "0",
+        mrexp: "1",
         mrmark: "",
       },
       mrecord: [],
     });
 
     init();
+
     function init() {
       axios({
         url: "/mRecord",
@@ -173,7 +197,22 @@ export default {
       }).catch((error) => {
         console.error(error);
       });
+
     }
+
+    //获取所有设备id
+    function getids(){
+      axios({
+        url: "/device/id",
+        method: "get",
+      }).then((response) => {
+        state.ids = response.data;
+        console.log(response);
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
+
 
     // 增加维保记录，无did
     const addMRecordNoId = () => {
@@ -217,6 +256,19 @@ export default {
         .catch((error) => {
           console.error(error);
         });
+      // 清空表单
+      state.addMRecord = {
+        did: "",
+        eid: "",
+        mrtime: "",
+        mrentity: "",
+        mrcontent: "",
+        mrstate: "0",
+        mrexp: "1",
+        mrmark: "",
+      };
+      //获取添加后数据
+      init();
     };
 
     const getRowReviseData = (mrecord) => {
@@ -228,8 +280,7 @@ export default {
     const handleRevise = (mrecord) => {
       if (
         state.reviseForm.mrstate == "" ||
-        state.reviseForm.mrexp == "" ||
-        state.reviseForm.mrmark == ""
+        state.reviseForm.mrexp == ""
       ) {
         ElMessage.warning("请输入修改类型！");
         return;
@@ -238,7 +289,7 @@ export default {
         .put("mRecord/mrid", {
           mrid: mrecord.mrid,
           mrtime: mrecord.mrtime,
-          mrcontent: mrecord.mrtime,
+          mrcontent: mrecord.content,
           mrentity: mrecord.mrentity,
           mrstate: state.reviseForm.mrstate,
           mrexp: state.reviseForm.mrexp,
@@ -266,6 +317,8 @@ export default {
       state.formQuery.did = "";
       init()
     };
+
+
     return {
       ...toRefs(state),
       getRowReviseData,
@@ -273,9 +326,11 @@ export default {
       tableSearch,
       resetSearch,
       addMRecordNoId,
+      getids,
     };
   },
 };
+
 </script>
 
 <style scoped>

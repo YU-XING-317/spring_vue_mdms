@@ -17,6 +17,16 @@ public class Device {
     private String hospital;
     // 设备所属科室
     private String department;
+    //设备维保状态
+    private String deviceState;
+    //是否超期未保
+    private String isOverdue;
+    //检验状态
+    private String isChecked;
+    //检验结果
+    private String checkResult;
+    //设备风险状态
+    private String isRisk;
 
     public String getDid() {
         return did;
@@ -66,6 +76,46 @@ public class Device {
         this.department = department;
     }
 
+    public String getDeviceState() {
+        return deviceState;
+    }
+
+    public void setDeviceState(String deviceState) {
+        this.deviceState = deviceState;
+    }
+
+    public String getIsOverdue() {
+        return isOverdue;
+    }
+
+    public void setIsOverdue(String isOverdue) {
+        this.isOverdue = isOverdue;
+    }
+
+    public String getIsChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(String isChecked) {
+        this.isChecked = isChecked;
+    }
+
+    public String getCheckResult() {
+        return checkResult;
+    }
+
+    public void setCheckResult(String checkResult) {
+        this.checkResult = checkResult;
+    }
+
+    public String getIsRisk() {
+        return isRisk;
+    }
+
+    public void setIsRisk(String isRisk) {
+        this.isRisk = isRisk;
+    }
+
     @Override
     public String toString() {
         return "Device{" +
@@ -75,6 +125,11 @@ public class Device {
                 ", supplier='" + supplier + '\'' +
                 ", hospital='" + hospital + '\'' +
                 ", department='" + department + '\'' +
+                ", deviceState='" + deviceState + '\'' +
+                ", isOverdue='" + isOverdue + '\'' +
+                ", isChecked='" + isChecked + '\'' +
+                ", checkResult='" + checkResult + '\'' +
+                ", isRisk='" + isRisk + '\'' +
                 '}';
     }
 }
